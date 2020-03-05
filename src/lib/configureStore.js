@@ -1,16 +1,10 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import logger from 'redux-logger';
+import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
 
-const addPromiseToDispatch = ({ dispatch }) => next => action => {
-  if (typeof action === 'function') {
-    return action(dispatch);
-  }
-  return next(action);
-};
-
 export default function(initialState) {
-  const middlewares = [logger, addPromiseToDispatch];
+  const middlewares = [logger, thunk];
 
   return createStore(
     rootReducer,

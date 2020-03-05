@@ -1,4 +1,9 @@
-import { LOAD_ARTICLES_REQUEST, LOAD_ARTICLES_SUCCESS } from '../actions';
+import {
+  LOAD_ARTICLES_REQUEST,
+  LOAD_ARTICLES_SUCCESS,
+  LOAD_ARTICLE_REQUEST,
+  LOAD_ARTICLE_SUCCESS
+} from '../actions';
 import axios from 'axios';
 
 function requestArticles() {
@@ -14,11 +19,33 @@ function receiveArticles(articles) {
   };
 }
 
-export function loadArticle() {
+function requestArticle() {
+  return {
+    type: LOAD_ARTICLE_REQUEST
+  };
+}
+
+function receiveArticle(article) {
+  return {
+    type: LOAD_ARTICLE_SUCCESS,
+    article
+  };
+}
+
+export function loadArticle(id) {
+  return dispatch => {
+    dispatch(requestArticle());
+    axios
+      .get(`/api/articles/${id}`)
+      .then(({ data }) => dispatch(receiveArticle(data)));
+  };
+}
+
+export function loadArticles() {
   return dispatch => {
     dispatch(requestArticles());
     axios
       .get('/api/articles')
-      .then(({ data: { data } }) => dispatch(receiveArticles(data)));
+      .then(({ data }) => dispatch(receiveArticles(data)));
   };
 }
