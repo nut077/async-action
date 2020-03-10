@@ -32,20 +32,16 @@ function receiveArticle(article) {
   };
 }
 
-export function loadArticle(id) {
-  return dispatch => {
-    dispatch(requestArticle());
-    axios
-      .get(`/api/articles/${id}`)
-      .then(({ data }) => dispatch(receiveArticle(data)));
-  };
-}
+export const loadArticle = id => dispatch => {
+  dispatch(requestArticle());
+  axios
+    .get(`/api/articles/${id}`)
+    .then(({ data }) => dispatch(receiveArticle(data)));
+};
 
-export function loadArticles() {
-  return dispatch => {
-    dispatch(requestArticles());
-    axios
-      .get('/api/articles')
-      .then(({ data }) => dispatch(receiveArticles(data)));
-  };
-}
+export const loadArticles = () => dispatch => {
+  dispatch(requestArticles());
+  axios
+    .get('/api/articles')
+    .then(({ data }) => dispatch(receiveArticles(data)));
+};

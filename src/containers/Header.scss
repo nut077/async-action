@@ -1,0 +1,28 @@
+@import '../theme/variables.scss';
+@import '../theme/colors.scss';
+
+.headerMenu {
+  display: flex;
+  height: 50px;
+  align-items: center;
+  justify-content: space-around;
+  background: $grape-fruit-dark-color;
+}
+
+.nav-link {
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 5px;
+  padding: $gutter / 4;
+  margin: 0 $gutter;
+  background: $grape-fruit-light-color;
+}
+
+.auth {
+  display: flex;
+  &-link {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 $gutter / 4;
+  }
+}
