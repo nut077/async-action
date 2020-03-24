@@ -1,37 +1,41 @@
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
+  LOGIN_FAILURE,
   REGISTER_REQUEST,
-  REGISTER_SUCCESS
+  REGISTER_SUCCESS,
+  REGISTER_FAILURE
 } from '../actions';
-import axios from 'axios';
 import { setToken, clearToken } from '../lib';
 import { LOGOUT } from './types';
+import { createAction } from 'redux-api-middleware';
 
-function requestLogin() {
-  return {
-    type: LOGIN_REQUEST
-  };
-}
-
-function loginSuccess(token) {
-  setToken(token);
-  return {
-    type: LOGIN_SUCCESS,
-    token
-  };
-}
-
-export const login = ({ username, password }) => dispatch => {
-  dispatch(requestLogin);
-  axios
-    .post('/api/authenticate', {
+export function login({ username, password }) {
+  createAction({
+    endpoint: '/api/authenticate',
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
       username,
       password
-    })
-    .then(({ headers }) => dispatch(loginSuccess(headers['authorization'])))
-    .catch(() => alert('รหัสผ่านไม่ถูกต้อง'));
-};
+    }),
+    types: [
+      LOGIN_REQUEST,
+      {
+        type: LOGIN_SUCCESS,
+        payload(action, state, res) {
+          const token = res.headers.get('Authorization');
+          setToken(token);
+          return { token };
+        }
+      },
+      LOGIN_FAILURE
+    ]
+  });
+}
 
 export function logout() {
   clearToken();
@@ -40,26 +44,26 @@ export function logout() {
   };
 }
 
-function requestRegister() {
-  return {
-    type: REGISTER_REQUEST
-  };
+export function register({ username, password }) {
+  createAction({
+    endpoint: '/api/register',
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ username, password }),
+    types: [
+      REGISTER_REQUEST,
+      {
+        type: REGISTER_SUCCESS,
+        payload(action, state, res) {
+          const token = res.headers.get('Authorization');
+          setToken(token);
+          return { token };
+        }
+      },
+      REGISTER_FAILURE
+    ]
+  });
 }
-
-function registerSuccess(token) {
-  setToken(token);
-  return {
-    type: REGISTER_SUCCESS,
-    token
-  };
-}
-
-export const register = ({ username, password }) => dispatch => {
-  dispatch(requestRegister);
-  axios
-    .post('/api/register', {
-      username,
-      password
-    })
-    .then(({ headers }) => dispatch(registerSuccess(headers['authorization'])));
-};

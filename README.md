@@ -5,3 +5,4 @@ yarn add axios<br>
 yarn add prop-types<br>
 yarn add redux-thunk<br>
 yarn add react-topbar-progress-indicator<br>
+yarn add redux-api-middleware<br>

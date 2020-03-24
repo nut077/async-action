@@ -1,47 +1,23 @@
 import {
   LOAD_ARTICLES_REQUEST,
   LOAD_ARTICLES_SUCCESS,
+  LOAD_ARTICLES_FAILURE,
   LOAD_ARTICLE_REQUEST,
-  LOAD_ARTICLE_SUCCESS
+  LOAD_ARTICLE_SUCCESS,
+  LOAD_ARTICLE_FAILURE
 } from '../actions';
-import axios from 'axios';
+import { createAction } from 'redux-api-middleware';
 
-function requestArticles() {
-  return {
-    type: LOAD_ARTICLES_REQUEST
-  };
+export function loadArticle(id) {
+  createAction({
+    endpoint: `/api/articles/${id}`,
+    types: [LOAD_ARTICLE_REQUEST, LOAD_ARTICLE_SUCCESS, LOAD_ARTICLES_FAILURE]
+  });
 }
 
-function receiveArticles(articles) {
-  return {
-    type: LOAD_ARTICLES_SUCCESS,
-    articles
-  };
+export function loadArticles() {
+  createAction({
+    endpoint: '/api/articles',
+    types: [LOAD_ARTICLES_REQUEST, LOAD_ARTICLES_SUCCESS, LOAD_ARTICLE_FAILURE]
+  });
 }
-
-function requestArticle() {
-  return {
-    type: LOAD_ARTICLE_REQUEST
-  };
-}
-
-function receiveArticle(article) {
-  return {
-    type: LOAD_ARTICLE_SUCCESS,
-    article
-  };
-}
-
-export const loadArticle = id => dispatch => {
-  dispatch(requestArticle());
-  axios
-    .get(`/api/articles/${id}`)
-    .then(({ data }) => dispatch(receiveArticle(data)));
-};
-
-export const loadArticles = () => dispatch => {
-  dispatch(requestArticles());
-  axios
-    .get('/api/articles')
-    .then(({ data }) => dispatch(receiveArticles(data)));
-};

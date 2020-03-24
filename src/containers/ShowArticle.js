@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { loadArticle } from '../actions';
 import TopBarProgress from 'react-topbar-progress-indicator';
-import { Comment } from '../components';
+import { Comment, Button } from '../components';
 import './ShowArticle.scss';
 
-const ShowArticle = ({ article, loadArticle }) => {
+const ShowArticle = ({ article, loadArticle, isLoggedIn }) => {
   useEffect(() => {
     loadArticle();
   }, [loadArticle]);
@@ -15,7 +15,8 @@ const ShowArticle = ({ article, loadArticle }) => {
       <div>
         <h2>{article.title}</h2>
         <p>{article.content}</p>
-        <div className="buttons"></div>
+        <Button to={`/articles/${article.id}/edit`}>Edit</Button>
+        <Button>Delete</Button>
         <hr />
         {article.comments.map((comment, index) => (
           <Comment key={`comment${index}`} {...comment} />
@@ -28,8 +29,9 @@ const ShowArticle = ({ article, loadArticle }) => {
 };
 
 export default connect(
-  ({ articles: { items } }, { match: { params } }) => ({
-    article: items.find(article => article.id === params.id)
+  ({ articles: { items }, auth }, { match: { params } }) => ({
+    article: items.find(article => article.id === params.id),
+    isLoggedIn: !!auth.token
   }),
   (dispatch, { match: { params } }) => ({
     loadArticle() {

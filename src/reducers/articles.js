@@ -21,12 +21,12 @@ export default (state = initialState, action) => {
     case LOAD_ARTICLES_SUCCESS:
       return {
         isLoading: false,
-        items: action.articles
+        items: action.payload
       };
     case LOAD_ARTICLE_SUCCESS:
       return {
         isLoading: false,
-        items: [action.article]
+        items: [action.payload]
       };
     default:
       return state;
