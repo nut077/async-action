@@ -10,7 +10,7 @@ import { setToken, clearToken } from '../lib';
 import { LOGOUT } from './types';
 import { createAction } from 'redux-api-middleware';
 
-export function login({ username, password }) {
+export const login = ({ username, password }) =>
   createAction({
     endpoint: '/api/authenticate',
     method: 'POST',
@@ -35,7 +35,6 @@ export function login({ username, password }) {
       LOGIN_FAILURE
     ]
   });
-}
 
 export function logout() {
   clearToken();
@@ -44,7 +43,7 @@ export function logout() {
   };
 }
 
-export function register({ username, password }) {
+export const register = ({ username, password }) =>
   createAction({
     endpoint: '/api/register',
     method: 'POST',
@@ -66,4 +65,3 @@ export function register({ username, password }) {
       REGISTER_FAILURE
     ]
   });
-}
