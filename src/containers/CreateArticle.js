@@ -1,5 +1,17 @@
-import React from 'react';
+import React from "react";
+import { connect } from "react-redux";
+import { createArticle } from "../actions";
+import { ArticleForm } from "../components";
 
-const CreateArticle = () => <div>Create Article</div>;
+const CreateArticle = ({ createArticle }) => (
+  <div>
+    <ArticleForm header="New Article" onSubmit={createArticle} />
+  </div>
+);
 
-export default CreateArticle;
+export default connect(null, (dispatch, { history }) => ({
+  createArticle(input) {
+    dispatch(createArticle(input));
+    history.push("/articles");
+  }
+}))(CreateArticle);

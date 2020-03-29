@@ -1,15 +1,15 @@
-import React, { useReducer } from 'react';
-import PropTypes from 'prop-types';
-import { Prompt } from 'react-router-dom';
-import { Button } from './';
-import './AuthForm.scss';
+import React, { useReducer } from "react";
+import PropTypes from "prop-types";
+import { Prompt } from "react-router-dom";
+import { Button } from "./";
+import "./AuthForm.scss";
 
 const AuthForm = ({ title, onSubmit }) => {
   const [inputForm, setInputForm] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
-      username: '',
-      password: '',
+      username: "",
+      password: "",
       isDirty: false
     }
   );
