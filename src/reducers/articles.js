@@ -4,12 +4,12 @@ import {
   LOAD_ARTICLE_REQUEST,
   LOAD_ARTICLE_SUCCESS,
   CREATE_ARTICLE_REQUEST,
-  CREATE_ARTICLE_SUCCESS
-} from "../actions";
+  CREATE_ARTICLE_SUCCESS,
+} from '../actions';
 
 const initialState = {
   isLoading: false,
-  items: []
+  items: [],
 };
 
 export default (state = initialState, action) => {
@@ -19,19 +19,20 @@ export default (state = initialState, action) => {
     case CREATE_ARTICLE_REQUEST:
       return {
         isLoading: true,
-        items: []
+        items: [],
       };
     case LOAD_ARTICLES_SUCCESS:
       return {
         isLoading: false,
-        items: action.payload
+        items: action.payload,
       };
     case LOAD_ARTICLE_SUCCESS:
-    case CREATE_ARTICLE_SUCCESS:
+    case CREATE_ARTICLE_SUCCESS: {
       return {
         isLoading: false,
-        items: [action.payload]
+        items: [action.payload],
       };
+    }
     default:
       return state;
   }
