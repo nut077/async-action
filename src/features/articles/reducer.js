@@ -8,7 +8,7 @@ import {
   EDIT_ARTICLE_REQUEST,
   EDIT_ARTICLE_SUCCESS,
   DELETE_ARTICLE_SUCCESS,
-} from '../actions';
+} from '../../types';
 
 const initialState = {};
 

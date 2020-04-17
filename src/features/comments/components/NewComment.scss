@@ -1,0 +1,12 @@
+@import '../../../theme/colors.scss';
+@import '../../../theme/variables.scss';
+
+.container-new-comment {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.button-new-comment {
+  margin-left: auto;
+  margin-top: $gutter / 2;
+}

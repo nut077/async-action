@@ -1,4 +1,4 @@
-import { EDIT_ARTICLE_SUCCESS, LOAD_ARTICLE_SUCCESS } from '../actions';
+import { EDIT_ARTICLE_SUCCESS, LOAD_ARTICLE_SUCCESS } from '../../types';
 
 export default (state = [], action) => {
   switch (action.type) {
